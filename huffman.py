@@ -17,6 +17,7 @@ def generate_tree(path: str) -> list[(int, int)]:
         tree.append((frequency, [(0, 0, byte)]))
     while len(tree) >= 2:
         tree.sort(reverse=True)
+        # Get bottom 2 nodes with lowest frequencies
         (first, second) = (tree.pop(), tree.pop())
         total_frequency = first[0] + second[0]
         # Add 1 bit at the front of left node, and 0 to at the front of right node
