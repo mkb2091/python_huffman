@@ -2,7 +2,7 @@ import json
 
 BLOCK = 4096
 
-def generate_tree(path):
+def generate_tree(path: str) -> list[(int, int)]:
     frequencies = [0] * 256
     # Having zero frequency for unused bytes means that the tree still contains them
     # And so can be used on any data
@@ -28,7 +28,7 @@ def generate_tree(path):
         encoder_tree[byte] = (code, bit_count)
     return encoder_tree
 
-def compress(input_path, output_path, encoder_tree):
+def compress(input_path: str, output_path: str, encoder_tree: list[(int, int)]):
     buffer = []
     current_buffer_size = 0
     with open(input_path, 'rb') as input_file:
@@ -75,7 +75,7 @@ def compress(input_path, output_path, encoder_tree):
             output_file.write(bytes(buffer))
 
 
-def decompress(input_path, output_path):
+def decompress(input_path: str, output_path: str):
     buffer = []
     current_buffer_size = 0
     with open(input_path, 'rb') as input_file:
@@ -141,7 +141,8 @@ def main():
         compress(args.input_file, args.output_file, tree)
     elif args.mode == 'decompress':
         decompress(args.input_file, args.output_file)
-    print(args)
+    else:
+        print('Invalid mode: %s, mode should be either build_tree, compress or decompress' % args.mode)
 
 if __name__ == '__main__':
     main()
